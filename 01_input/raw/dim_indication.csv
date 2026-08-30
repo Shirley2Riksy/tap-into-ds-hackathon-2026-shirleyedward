@@ -1,0 +1,9 @@
+indication_id,indication_code,indication_name,market_code
+9001,wet_amd,Wet Age-related Macular Degeneration,OPH
+9002,dme,Diabetic Macular Edema,OPH
+9003,rvo,Retinal Vein Occlusion,OPH
+9004,rrms,Relapsing-Remitting Multiple Sclerosis,MS
+9005,ppms,Primary Progressive Multiple Sclerosis,MS
+9006,hem_a,Hemophilia A,HEM
+9007,sev_asthma,Severe Allergic/Eosinophilic Asthma,RESP
+9008,her2_bc,HER2-positive Breast Cancer,ONC

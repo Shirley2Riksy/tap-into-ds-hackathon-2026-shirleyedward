@@ -1,0 +1,28 @@
+product_brand_id,product_brand_name,indication_id,indication_code,indication_name,flag_commercially_approved
+5101,Retivue,9002,dme,Diabetic Macular Edema,Y
+5102,Vabyseal,9003,rvo,Retinal Vein Occlusion,Y
+5102,Vabyseal,9001,wet_amd,Wet Age-related Macular Degeneration,Y
+5103,Eylanta,9002,dme,Diabetic Macular Edema,Y
+5103,Eylanta,9003,rvo,Retinal Vein Occlusion,Y
+5103,Eylanta,9001,wet_amd,Wet Age-related Macular Degeneration,Y
+5104,Bevagen,9003,rvo,Retinal Vein Occlusion,Y
+5104,Bevagen,9001,wet_amd,Wet Age-related Macular Degeneration,Y
+5104,Bevagen,9002,dme,Diabetic Macular Edema,Y
+5105,Ocretiva,9005,ppms,Primary Progressive Multiple Sclerosis,Y
+5105,Ocretiva,9004,rrms,Relapsing-Remitting Multiple Sclerosis,Y
+5106,Tysvia,9005,ppms,Primary Progressive Multiple Sclerosis,Y
+5107,Kesipra,9004,rrms,Relapsing-Remitting Multiple Sclerosis,Y
+5108,Gilenova,9004,rrms,Relapsing-Remitting Multiple Sclerosis,Y
+5108,Gilenova,9005,ppms,Primary Progressive Multiple Sclerosis,Y
+5109,Hemvia,9006,hem_a,Hemophilia A,Y
+5110,Factyra,9006,hem_a,Hemophilia A,Y
+5111,Advanta8,9006,hem_a,Hemophilia A,Y
+5112,Xolarin,9007,sev_asthma,Severe Allergic/Eosinophilic Asthma,Y
+5113,Dupixair,9007,sev_asthma,Severe Allergic/Eosinophilic Asthma,Y
+5114,Nucalzu,9007,sev_asthma,Severe Allergic/Eosinophilic Asthma,Y
+5115,Fasenta,9007,sev_asthma,Severe Allergic/Eosinophilic Asthma,Y
+5116,Perjenta,9008,her2_bc,HER2-positive Breast Cancer,Y
+5117,Phesgrox,9008,her2_bc,HER2-positive Breast Cancer,Y
+5118,Kadcynex,9008,her2_bc,HER2-positive Breast Cancer,Y
+5119,Herzuma,9008,her2_bc,HER2-positive Breast Cancer,Y
+5120,Ontruza,9008,her2_bc,HER2-positive Breast Cancer,Y

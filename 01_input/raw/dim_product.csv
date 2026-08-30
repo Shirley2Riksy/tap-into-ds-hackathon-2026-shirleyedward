@@ -1,0 +1,21 @@
+product_brand_id,product_brand_name,product_molecule_name,manufacturer,flag_competitor,market_code,market_name,product_benefit_type,flag_generic,product_ro_number,launch_date,list_wac_per_unit
+5101,Retivue,ranibivax,Genentech-Synth,N,OPH,Ophthalmology - Retinal (anti-VEGF),Medical,N,RO-834081,,1950
+5102,Vabyseal,farisimab,Genentech-Synth,N,OPH,Ophthalmology - Retinal (anti-VEGF),Medical,N,RO-765409,2022-03-01,2190
+5103,Eylanta,afliberzumab,Northwind Bio,Y,OPH,Ophthalmology - Retinal (anti-VEGF),Medical,N,RO-337259,,2100
+5104,Bevagen,bevacizumab-x,Valcor Generics,Y,OPH,Ophthalmology - Retinal (anti-VEGF),Medical,Y,RO-920218,,95
+5105,Ocretiva,ocrelizumab-s,Genentech-Synth,N,MS,Multiple Sclerosis,Medical,N,RO-692294,,3350
+5106,Tysvia,natalizabax,Northwind Bio,Y,MS,Multiple Sclerosis,Medical,N,RO-687567,,3100
+5107,Kesipra,fenmozimod,Solvias Pharma,Y,MS,Multiple Sclerosis,Medical,N,RO-224007,2023-01-01,280
+5108,Gilenova,fingolibax,Valcor Generics,Y,MS,Multiple Sclerosis,Medical,Y,RO-137482,,95
+5109,Hemvia,emicizuvab,Genentech-Synth,N,HEM,Hemophilia A,Pharmacy,N,RO-405879,,8200
+5110,Factyra,rfactor-viii,Northwind Bio,Y,HEM,Hemophilia A,Pharmacy,N,RO-789096,,2600
+5111,Advanta8,fviii-fc,Solvias Pharma,Y,HEM,Hemophilia A,Pharmacy,N,RO-235515,,2900
+5112,Xolarin,omalizuvab,Genentech-Synth,N,RESP,Severe Asthma / Respiratory Biologics,Pharmacy,N,RO-215912,,1450
+5113,Dupixair,dupilumbax,Northwind Bio,Y,RESP,Severe Asthma / Respiratory Biologics,Pharmacy,N,RO-846468,,1600
+5114,Nucalzu,mepolizubax,Solvias Pharma,Y,RESP,Severe Asthma / Respiratory Biologics,Pharmacy,N,RO-593704,,1500
+5115,Fasenta,benralizbax,Valcor Generics,Y,RESP,Severe Asthma / Respiratory Biologics,Pharmacy,Y,RO-835244,2021-09-01,1400
+5116,Perjenta,pertuzumab-s,Genentech-Synth,N,ONC,HER2+ Breast Oncology,Medical,N,RO-156530,,6100
+5117,Phesgrox,pertu-trastu,Genentech-Synth,N,ONC,HER2+ Breast Oncology,Medical,N,RO-174627,2021-06-01,6400
+5118,Kadcynex,tdm1-syn,Genentech-Synth,N,ONC,HER2+ Breast Oncology,Medical,N,RO-895857,,7300
+5119,Herzuma,trastuzu-bs,Valcor Generics,Y,ONC,HER2+ Breast Oncology,Medical,Y,RO-668015,,2400
+5120,Ontruza,trastuzu-bs2,Northwind Bio,Y,ONC,HER2+ Breast Oncology,Medical,N,RO-187689,2022-01-01,2200
