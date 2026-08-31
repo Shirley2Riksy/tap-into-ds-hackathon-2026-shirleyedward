@@ -11007,7 +11007,12 @@ def _faq_answer(prompt: str) -> str | None:
                              "ddd data","xponent data","share denominator","market definition",
                              "how is share measured","how share is","data source for market",
                              "how is fc_share","share per zone","how share computed",
-                             "share methodology","how do we measure share"]):
+                             "share methodology","how do we measure share",
+                             "how was competitor forecast","how were competitors forecast",
+                             "competitor modelling","competitor model","how competitor volume",
+                             "autotheta","tsb model","teunter","competitor denominator",
+                             "how is denominator","how denominator calculated",
+                             "how total market","competitor forecast method"]):
         return (
             "**How Market Share Is Calculated**\n\n"
             "Market share measures how much of a disease area's total prescriptions belong to our brand. "
@@ -11030,9 +11035,39 @@ def _faq_answer(prompt: str) -> str | None:
             "which reflects a realistic view of national performance.\n\n"
             "**For the H1 2025 forecast:**\n"
             "The numerator (our brand's volume) comes from the TiDE and LightGBM model predictions. "
-            "The denominator (total market) is estimated using the market's recent growth trajectory. "
-            "Since competitor volumes in 2025 are not individually modelled, "
-            "the 2024 IQVIA actuals serve as the reference point for GNE versus competitor comparisons."
+            "The denominator (total market) is built from a separate competitor forecasting pipeline "
+            "that models each competitor brand individually for Jan to Jun 2025.\n\n"
+            "**How competitor volumes were forecast:**\n"
+            "Each competitor brand was first classified by its historical demand pattern using "
+            "CV2 (coefficient of variation squared) and trend slope:\n\n"
+            "| Competitor Pattern | Classification Criteria | Model Used |\n"
+            "|---|---|---|\n"
+            "| Stable | Low CV2, no strong trend | AutoTheta (M4 competition winner for smooth series) |\n"
+            "| Growth | Strong positive or negative trend slope | LightGBM with lag, payer, price and trend features |\n"
+            "| Erratic | High variability, sparse or intermittent demand | TSB (Teunter-Syntetos-Babai, designed for pharma intermittent demand) |\n\n"
+            "**Competitor brand classifications:**\n\n"
+            "| Brand | Market | Pattern | Model | Trend |\n"
+            "|---|---|---|---|---|\n"
+            "| Advanta8 | HEM | Stable | AutoTheta | +0.51%/mo |\n"
+            "| Factyra | HEM | Stable | AutoTheta | +0.50%/mo |\n"
+            "| Tysvia | MS | Stable | AutoTheta | +0.40%/mo |\n"
+            "| Gilenova | MS | Stable | AutoTheta | +0.41%/mo |\n"
+            "| Kesipra | MS | Erratic | TSB | +8.38%/mo (high variability, rapid uptake) |\n"
+            "| Eylanta | OPH | Stable | AutoTheta | +0.67%/mo |\n"
+            "| Bevagen | OPH | Stable | AutoTheta | +0.69%/mo |\n"
+            "| Dupixair | RESP | Stable | AutoTheta | +0.67%/mo |\n"
+            "| Nucalzu | RESP | Stable | AutoTheta | +0.73%/mo |\n"
+            "| Fasenta | RESP | Growth | LightGBM | +4.25%/mo (strong upward trend) |\n"
+            "| Herzuma | ONC | Stable | AutoTheta | +0.31%/mo |\n"
+            "| Ontruza | ONC | Growth | LightGBM | +4.76%/mo (strong upward trend) |\n\n"
+            "Kesipra's erratic pattern reflects its rapid and uneven uptake as a newer SC anti-CD20 agent. "
+            "Fasenta and Ontruza are classified as growth brands because they are actively gaining share "
+            "at a consistent rate, requiring a trend-aware model rather than a seasonal one.\n\n"
+            "All three models were validated on H2 2024 hold-out data. "
+            "The best-performing model was selected per competitor brand, "
+            "then retrained on the full history through December 2024 to produce the 2025 forecast. "
+            "The resulting competitor volumes feed directly into the market share denominator, "
+            "giving a fully modelled total market rather than a static historical reference."
         )
 
     # Data skewness handling
@@ -15233,14 +15268,66 @@ Best when demand has **sudden spikes** - like a hospital ordering 500 units in J
 then nothing for months. Handles unpredictable patterns better.
 
 **What both models use:**
-- Last 12 months of actual sales
+- 42 months of actual sales history for training (January 2021 to December 2024). TiDE additionally uses a 36-month rolling input context window to capture long-range seasonal cycles. LightGBM uses lag features reaching back up to 12 months (lag_1 through lag_12) plus 3-month and 6-month rolling averages.
 - Payer access (how easy it is to get insurance coverage)
-- Sales rep visit history
-- Seasonal patterns (which months are historically higher/lower)
-- Competitor trends
+- Sales rep visit history and digital promotion spend
+- Price (effective net price per unit after rebates)
+- Seasonal patterns via Fourier terms and a brand-specific seasonal index
+- Competitor trends and market context
 
-**Bottom line:** Our ensemble model uses 40+ signals. TM1 is built from analyst-adjusted prior year actuals.
+**Bottom line:** Our ensemble model uses 40+ signals across 42 months of history. TM1 is built from analyst-adjusted prior year actuals.
 That is why we are 87% more accurate.
+        """)
+
+    with st.expander("How Market Share Is Calculated (Including Competitor Forecasting)"):
+        st.markdown("""
+**The market share formula:**
+
+> Market Share (%) = Our Brand Sales / (Our Brand Sales + All Competitor Sales) x 100
+
+Both the numerator and the denominator are forecasted, not held flat from history.
+
+**Numerator: GNE brand forecast**
+
+The 8 GNE brands are forecast using the TiDE and LightGBM ensemble described above.
+
+**Denominator: Competitor forecast**
+
+Each of the 12 competitor brands was modelled individually for Jan to Jun 2025.
+First, every competitor was classified by its historical demand pattern using two signals:
+- **CV2 (coefficient of variation squared):** how variable the sales are month to month
+- **Trend slope:** how fast the brand is growing or declining as a percentage per month
+
+Based on these signals, the best model was selected per brand:
+
+| Pattern | Criteria | Model |
+|---------|----------|-------|
+| Stable | Low variability, no strong trend | AutoTheta, M4 competition winner, best for smooth monthly series |
+| Growth | Strong upward or downward trend | LightGBM, captures trend interactions with payer and price features |
+| Erratic | High variability, sparse or intermittent demand | TSB (Teunter-Syntetos-Babai), purpose-built for irregular pharma demand |
+
+**How each competitor was classified:**
+
+| Competitor | Market | Pattern | Model | Monthly Trend |
+|------------|--------|---------|-------|---------------|
+| Advanta8 | HEM | Stable | AutoTheta | +0.51%/mo |
+| Factyra | HEM | Stable | AutoTheta | +0.50%/mo |
+| Tysvia | MS | Stable | AutoTheta | +0.40%/mo |
+| Gilenova | MS | Stable | AutoTheta | +0.41%/mo |
+| Kesipra | MS | Erratic | TSB | +8.38%/mo (rapid, uneven SC uptake) |
+| Eylanta | OPH | Stable | AutoTheta | +0.67%/mo |
+| Bevagen | OPH | Stable | AutoTheta | +0.69%/mo |
+| Dupixair | RESP | Stable | AutoTheta | +0.67%/mo |
+| Nucalzu | RESP | Stable | AutoTheta | +0.73%/mo |
+| Fasenta | RESP | Growth | LightGBM | +4.25%/mo (consistent upward trend) |
+| Herzuma | ONC | Stable | AutoTheta | +0.31%/mo |
+| Ontruza | ONC | Growth | LightGBM | +4.76%/mo (consistent upward trend) |
+
+Kesipra is erratic because it is a newer SC anti-CD20 agent gaining share in an uneven way across territories.
+Fasenta and Ontruza are growth brands with consistent month-on-month volume increases.
+
+All three models were validated on H2 2024 hold-out data and the best performer was selected per brand.
+The winning model was then retrained on the full history through December 2024 to produce the 2025 competitor forecast.
         """)
 
     with st.expander("How to Read Each Tab"):
